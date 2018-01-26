@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">E-Katalog Produk</string>
+    <string name="title_activity_menu">activity_menu</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_home">Activity_home</string>
+    <string name="title_activity_kategori">activity_kategori</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAndroidGreen">#2ecc71</color>
+    <color name="colorRedCrimson">#e74c3c</color>
+    <color name="colorOrangeFruit">#e67e22</color>
+    <color name="colorOrangeDark">#d35400</color>
+    <color name="colorYellow">#f1c40f</color>
+    <color name="colorGreenTurqoise">#1abc9c</color>
+</resources>

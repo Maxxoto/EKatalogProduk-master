@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_tambah_data"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="ptacs.ekatalog.com.e_katalogproduk.activity.TambahProdukActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_kd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kode Produk"/>
+
+        <EditText
+            android:id="@+id/et_nama"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Produk"/>
+
+        //Ini mau tak jadikan spinner atau dropdown teks dimana datanya diambil dari website
+        <EditText
+            android:id="@+id/et_merk"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Merk Produk"/>
+        <EditText
+            android:id="@+id/et_jenis"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jenis Produk"/>
+        <EditText
+            android:id="@+id/et_variasi"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Variasi Produk"/>
+        <EditText
+            android:id="@+id/et_foto"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Foto Produk"/>
+
+        <Button
+            android:id="@+id/button_tambahdata"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#2ecc71"
+            android:text="tambah data"/>
+    </LinearLayout>
+</RelativeLayout>
