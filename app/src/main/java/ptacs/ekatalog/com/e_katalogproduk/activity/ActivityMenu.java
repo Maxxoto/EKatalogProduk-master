@@ -1,9 +1,12 @@
 package ptacs.ekatalog.com.e_katalogproduk.activity;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +44,7 @@ public class ActivityMenu extends AppCompatActivity
     private DBHandler dbHandler;
     private TextView txt_resultadapter;
     private TextView txt_judul;
+    private AlertDialog.Builder alertDialogBuilder;
     private List<Produk> produkList = new ArrayList<>();
 
     @Override
@@ -50,6 +54,9 @@ public class ActivityMenu extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        alertDialogBuilder = new AlertDialog.Builder(this);
+
 
         initComponents();
         initRecyclerView();
@@ -82,10 +89,33 @@ public class ActivityMenu extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            Exit();
         }
     }
 
+    private void Exit(){
+        alertDialogBuilder.setTitle("Tutup Aplikasi");
+        alertDialogBuilder
+                .setMessage("Apakah anda ingin menutup aplikasi ?")
+                .setCancelable(false)
+                .setPositiveButton("Ya",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityMenu.this.finish();
+                            }
+                        })
+                .setNegativeButton("Tidak",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        }).create().show();
+
+    }
+    //TUTUP ONBACK
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -210,7 +240,7 @@ public class ActivityMenu extends AppCompatActivity
         }
             void refreshItem(){
                 initRecyclerView();
-                cekDataRecyclerView();
+                //cekDataRecyclerView();
                 onItemLoad();
         }
             void onItemLoad(){
@@ -218,6 +248,7 @@ public class ActivityMenu extends AppCompatActivity
         }
 });
         }
+
 
 
         }

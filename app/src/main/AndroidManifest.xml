@@ -27,8 +27,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.ActivityMenu" />
-
         </activity>
+        <activity android:name=".activity.ActivityDetail" />
+        <activity
+            android:name=".activity.ActivityList"
+            android:label="@string/title_activity_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

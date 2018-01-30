@@ -51,8 +51,9 @@ public class TambahProdukActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validasiForm();
-                Snackbar.make(v , "Data Berhasil Ditambahkan",Snackbar.LENGTH_LONG)
-                        .setAction("Action",null).show();
+                //Snackbar.make( v ,"Data Berhasil Ditambahkan",Snackbar.LENGTH_LONG)
+                 //       .setAction("Action",null).show();
+
             }
         });
     }
@@ -91,6 +92,8 @@ public class TambahProdukActivity extends AppCompatActivity {
             adapter = new ProdukAdapter(produkList);
             adapter.notifyDataSetChanged();
 
+            Toast.makeText(this, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT).show();;
+
             //MENGOSONGKAN FORM
             et_kd.setText("");
             et_nama.setText("");
@@ -99,7 +102,9 @@ public class TambahProdukActivity extends AppCompatActivity {
             et_variasi.setText("");
             et_foto.setText("");
 
+
         }
     }
+
 }
 

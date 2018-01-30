@@ -22,31 +22,24 @@
             android:orientation="vertical"
             >
             <TextView
-                android:id="@+id/txt_resultfoto"
+                android:id="@+id/txt_resultmerk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="[FOTO]"
-                android:textSize="14sp"
+                android:text="[MERK PRODUK]"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 />
 
             <TextView
-                android:id="@+id/txt_resultkd"
+                android:id="@+id/txt_resultjenis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="[JENIS PRODUK]"
+                android:textSize="20sp"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/txt_resultfoto"
-                android:text="[KODE]"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/txt_resultnama"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_below="@id/txt_resultkd"
-                android:layout_toRightOf="@id/txt_resultfoto"
-                android:text="[NAMA_PRODUK]"
-                />
+                android:layout_toRightOf="@+id/txt_resultmerk"/>
+
+
 
 
 

@@ -17,23 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ptacs.ekatalog.com.e_katalogproduk.R;
-import ptacs.ekatalog.com.e_katalogproduk.adapter.ProdukAdapter;
+import ptacs.ekatalog.com.e_katalogproduk.adapter.KategoriAdapter;
 import ptacs.ekatalog.com.e_katalogproduk.helper.Constant;
 import ptacs.ekatalog.com.e_katalogproduk.helper.DBHandler;
+import ptacs.ekatalog.com.e_katalogproduk.helper.RecyclerItemClickListener;
 import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
 
  public class ActivityKategori extends AppCompatActivity {
 
-     private SwipeRefreshLayout swLayout;
-     private LinearLayout llayout;
+     private SwipeRefreshLayout swLayout2;
+     private LinearLayout llayout2;
      private RecyclerView recyclerView;
      private LinearLayoutManager layoutManager;
-     private ProdukAdapter adapter;
+     private KategoriAdapter adapter;
      private DBHandler dbHandler;
-     private TextView txt_resultadapter;
-     private TextView txt_judul;
-     private List<Produk> produkList = new ArrayList<>();
-
+     private List<Produk> kategoriList = new ArrayList<>();
+     private TextView tv1;
      String mMerkProduk;
 
     @Override
@@ -41,34 +40,94 @@ import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kategori);
 
-        TextView Data1 = findViewById(R.id.txt_Data1);
 
-
-
-
+        if (getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras();
+            mMerkProduk = bundle.getString(Constant.BUNDLE_MERK_PRODUK); //MERK kategori
 
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogoDescription(getResources().getString(R.string.app_name));
+        setTitle(mMerkProduk);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        dbHandler = new DBHandler(this);
+        }
 
+        initRecyclerView();
+        cekDataRecyclerView();
 
-        if (getIntent().getExtras() != null) {
-            Bundle bundle = getIntent().getExtras();
+        //dbHandler.getKategoryProduk(mMerkProduk);
+        }
+     private void initRecyclerView(){
 
-            mMerkProduk = bundle.getString(Constant.BUNDLE_MERK_PRODUK); //MERK kategori
-            Data1.setText(mMerkProduk);
-
-//            dbHandler.getKategoryProduk(mMerkProduk);
-//        }
-
+         recyclerView = (RecyclerView) findViewById(R.id.rv_kategori);
+         recyclerView.setHasFixedSize(true);
+         layoutManager = new LinearLayoutManager(this);
+         recyclerView.setLayoutManager(layoutManager);
+         dbHandler = new DBHandler(ActivityKategori.this);
+         kategoriList = dbHandler.getKategoryProduk(mMerkProduk);
+         //kategoriList = dbHandler.getKategoryProduk();
+         adapter = new KategoriAdapter(kategoriList);
+         recyclerView.setAdapter(adapter);
+         adapter.notifyDataSetChanged();
         }
 
 
-        }
 
-    }
+
+     private void cekDataRecyclerView() {
+
+         if (adapter.getItemCount() == 0) {
+             recyclerView.setVisibility(View.GONE);
+         } else {
+             recyclerView.setVisibility(View.VISIBLE);
+
+             recyclerView.addOnItemTouchListener(
+                     new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                         @Override
+                         public void onItemClick(View view, int position) {
+                             // TODO Handle item click
+
+                             Bundle bundle = new Bundle();
+
+                             //COMMIT MAS INDRA CS
+
+                             bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
+
+                             Intent intent = new Intent(ActivityKategori.this, ActivityList.class);
+                             intent.putExtras(bundle);
+                             startActivity(intent);
+
+                         }
+                     })
+             );
+         }
+
+         swLayout2 = (SwipeRefreshLayout) findViewById(R.id.sw_layout2);
+         llayout2 = (LinearLayout) findViewById(R.id.ll_Layout);
+
+         //Mengeset warna yang berputar
+         swLayout2.setColorSchemeResources(R.color.colorAccent,R.color.colorPrimary);
+
+         //Setting Listener yang akan dijalankan saat layar difresh
+         swLayout2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+             @Override
+             public void onRefresh() {
+                 refreshItem();
+             }
+             void refreshItem(){
+                 initRecyclerView();
+                 //cekDataRecyclerView();
+                 onItemLoad();
+             }
+             void onItemLoad(){
+                 swLayout2.setRefreshing(false);
+             }
+         });
+     }
+
+     }
+
 
 
 

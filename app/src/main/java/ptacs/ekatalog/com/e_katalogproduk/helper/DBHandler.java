@@ -9,8 +9,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +39,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + TABLE_PRODUK +
                 "(" + COLUMN_ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_KD + " TEXT,"
-                + COLUMN_NAMA + " TEXT,"
-                + COLUMN_MERK + " TEXT,"
+                + COLUMN_NAMA + " TEXT, "
+                + COLUMN_MERK + " TEXT, "
                 + COLUMN_JENIS + " TEXT, "
                 + COLUMN_VARIASI + " TEXT, "
                 + COLUMN_FOTO + " TEXT" + ")";
@@ -90,7 +88,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // FUNGSI UNTUK AMBIL SEMUA DATA PRODUK
     public List<Produk> getSemuaProduk(){
         List<Produk> produkList = new ArrayList<>();
-        String selectQuery = " SELECT * FROM " + TABLE_PRODUK ;
+        String selectQuery = " SELECT * FROM " + TABLE_PRODUK + " GROUP BY " + COLUMN_MERK + " ORDER BY merk_produk ASC ";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -144,6 +142,27 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL("DELETE FROM " + TABLE_PRODUK);
     }
+
+    //FUNGSI MENGAMBIL DATA WHERE DI ACTIVITY KATEGORY
+    public List<Produk> getKategoryProduk(String mMerkProduk) {
+
+        List<Produk> kategoriList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PRODUK + " WHERE " + COLUMN_MERK + " =? " ;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,new String[]{ mMerkProduk } );
+
+        if (cursor.moveToFirst()) {
+            do {
+                Produk kategori = new Produk(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
+                kategoriList.add(kategori);
+            } while (cursor.moveToNext());
+        }
+        return kategoriList;
+
+
+    }
+
 }
 
 
