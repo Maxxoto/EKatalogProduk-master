@@ -1,119 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="ptacs.ekatalog.com.e_katalogproduk.activity.ActivityDetail">
 
-
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorDarkGrey">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        >
 
-        <ImageView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_foreground"
-            android:maxHeight="450px"
-            android:minHeight="450px"
-            android:maxWidth="500px"
-            android:minWidth="500px"/>
-    </LinearLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        android:orientation="horizontal">
+    </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txt_resultmerk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[Merk Produk]"
-            android:textSize="18sp"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginBottom="10dp"
-            />
-        <TextView
-            android:id="@+id/txt_resultkode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[Kode Produk]"
-            android:textSize="18sp"
-            android:layout_marginLeft="25dp"
-            />
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                >
-
-            </view>
-        <TextView
-            android:id="@+id/txt_resultnama"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[Nama Produk]"
-            android:textSize="18sp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
-            />
-        <TextView
-            android:id="@+id/txt_resultjenis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[Jenis Produk]"
-            android:textSize="18sp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/txt_resultvariasi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[Nama Produk]"
-            android:textSize="18sp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
-            />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <view
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="25dp"
-                android:background="@color/colorDarkGrey"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="65dp"
-                android:layout_gravity="center_vertical"
-                android:textColorHint="@color/colorWhite"
-                android:hint="CEK HPP"
-                android:background="@color/colorPrimaryDark"
-                />
+    <include layout="@layout/content_activity_detail" />
 
 
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

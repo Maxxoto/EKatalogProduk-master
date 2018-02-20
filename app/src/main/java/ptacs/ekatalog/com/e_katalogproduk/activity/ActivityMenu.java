@@ -1,10 +1,9 @@
 package ptacs.ekatalog.com.e_katalogproduk.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -22,8 +21,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ajts.androidmads.library.ExcelToSQLite;
+import com.ajts.androidmads.library.SQLiteToExcel;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 import ptacs.ekatalog.com.e_katalogproduk.R;
@@ -47,6 +53,7 @@ public class ActivityMenu extends AppCompatActivity
     private AlertDialog.Builder alertDialogBuilder;
     private List<Produk> produkList = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //INITIALISASI
@@ -64,14 +71,6 @@ public class ActivityMenu extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_tambahdata);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ActivityMenu.this, TambahProdukActivity.class));
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -94,7 +93,7 @@ public class ActivityMenu extends AppCompatActivity
         }
     }
 
-    private void Exit(){
+    private void Exit() {
         alertDialogBuilder.setTitle("Tutup Aplikasi");
         alertDialogBuilder
                 .setMessage("Apakah anda ingin menutup aplikasi ?")
@@ -115,6 +114,7 @@ public class ActivityMenu extends AppCompatActivity
                         }).create().show();
 
     }
+
     //TUTUP ONBACK
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,12 +147,15 @@ public class ActivityMenu extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_import) {
+            OpenFilePicker();
 
         } else if (id == R.id.nav_export) {
-
+            ExportData();
+            Toast.makeText(ActivityMenu.this, "Data Berhasil di Export", Toast.LENGTH_LONG).show();
+            //TODO ONCLICK EXPORT
         } else if (id == R.id.nav_purge) {
             dbHandler.hapusSemuaDataProduk();
-            Toast.makeText(ActivityMenu.this,"Berhasil menghapus semua produk",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityMenu.this, "Berhasil menghapus semua data produk", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_aboutus) {
 
         } else if (id == R.id.nav_contactus) {
@@ -166,7 +169,7 @@ public class ActivityMenu extends AppCompatActivity
 
     //CODING RVIEW
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_produk);
         recyclerView.setHasFixedSize(true);
@@ -178,6 +181,78 @@ public class ActivityMenu extends AppCompatActivity
         adapter = new ProdukAdapter(produkList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    public void OpenFilePicker(){
+        new MaterialFilePicker()
+                .withActivity(this)
+                .withRequestCode(1)
+                .withFilter(Pattern.compile(".*\\.xls$")) // Filtering files and directories by file name using regexp
+                .withFilterDirectories(false) // Set directories filterable (false by default)
+                .withHiddenFiles(true) // Show hidden files and folders
+                .start();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            File file = new File(filePath);
+            if (!file.exists()) {
+                Toast.makeText(ActivityMenu.this, "Tidak ada File !", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DBHandler.DATABASE_NAME, false);
+
+            excelToSQLite.importFromFile(filePath, new ExcelToSQLite.ImportListener() {
+                @Override
+                public void onStart() {
+                    Toast.makeText(ActivityMenu.this, "Importing..Tunggu Beberapa Saat Hingga Muncul Tulisan Berhasil", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onCompleted(String dbName) {
+                    Toast.makeText(ActivityMenu.this, "Import Telah Berhasil ke Database " + DBHandler.DATABASE_NAME, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Toast.makeText(ActivityMenu.this, "Error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
+
+
+
+    private void ExportData(){
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/BackupKatalog/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        // Export SQLite DB as EXCEL FILE
+        SQLiteToExcel sqliteToExcel = new SQLiteToExcel(getApplicationContext(), DBHandler.DATABASE_NAME, directory_path);
+        sqliteToExcel.exportAllTables("katalogbarang.xls", new SQLiteToExcel.ExportListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onCompleted(String filePath) {
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
     }
 
     private void initComponents(){
@@ -186,40 +261,41 @@ public class ActivityMenu extends AppCompatActivity
     }
 
     // FUNGSI INI UNTUK MENGECEK APAKAH ADA DATA DI DALEM RECYCLERVIEW ATAU TIDAK
+    public void ClickListener(){
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+
+                        Bundle bundle = new Bundle();
+
+                        //COMMIT MAS INDRA CS
+
+                        bundle.putString(Constant.BUNDLE_MERK_PRODUK, adapter.getItem(position).getMerk_produk());
+
+                        Intent intent = new Intent(ActivityMenu.this, ActivityKategori.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }
+                })
+        );
+    }
     private void cekDataRecyclerView(){
 
-        if (adapter.getItemCount() == 0){
-            txt_resultadapter.setVisibility(View.VISIBLE);
-            txt_judul.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
+        if (adapter.getItemCount() == 0) {
             txt_resultadapter.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);txt_judul.setVisibility(View.VISIBLE);
+            txt_judul.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
 
-            recyclerView.addOnItemTouchListener(
-                    new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override public void onItemClick(View view, int position) {
-                            // TODO Handle item click
-
-                                Bundle bundle = new Bundle();
-
-                                //COMMIT MAS INDRA CS
-
-                                bundle.putString(Constant.BUNDLE_MERK_PRODUK, adapter.getItem(position).getMerk_produk());
-                                //
-                                //
-                                //
-                                //
-                                //
-
-                                Intent intent = new Intent(ActivityMenu.this, ActivityKategori.class);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-
-                        }
-                    })
-            );
+        }else {
+            txt_resultadapter.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            txt_judul.setVisibility(View.VISIBLE);
+            ClickListener();
         }
+
+
 
 
     //
@@ -240,7 +316,6 @@ public class ActivityMenu extends AppCompatActivity
         }
             void refreshItem(){
                 initRecyclerView();
-                //cekDataRecyclerView();
                 onItemLoad();
         }
             void onItemLoad(){
@@ -248,6 +323,7 @@ public class ActivityMenu extends AppCompatActivity
         }
 });
         }
+
 
 
 

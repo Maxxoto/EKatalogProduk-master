@@ -2,8 +2,6 @@
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +30,6 @@ import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
      private KategoriAdapter adapter;
      private DBHandler dbHandler;
      private List<Produk> kategoriList = new ArrayList<>();
-     private TextView tv1;
      String mMerkProduk;
 
     @Override
@@ -93,8 +90,9 @@ import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
                              //COMMIT MAS INDRA CS
 
                              bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
+                             bundle.putString(Constant.BUNDLE_MERK_PRODUK,adapter.getItem(position).getMerk_produk());
 
-                             Intent intent = new Intent(ActivityKategori.this, ActivityList.class);
+                             Intent intent = new Intent(ActivityKategori.this, ActivityKelompok.class);
                              intent.putExtras(bundle);
                              startActivity(intent);
 

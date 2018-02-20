@@ -1,31 +1,36 @@
 package ptacs.ekatalog.com.e_katalogproduk.model;
 
-import android.graphics.Bitmap;
 /**
  * Created by Maxoto on 1/15/2018.
  */
 
 public class Produk {
     private int id;
-    private String kd_produk;
+    private String tipe_produk;
     private String nama_produk;
     private String merk_produk;
     private String jenis_produk;
-    private String variasi_produk;
+    private String kelompok_produk;
+    private String stok_produk;
+    private int harga_produk;
     private String foto_produk;
+    private String deskripsi_produk;
 
 
     //TODO - INISIALISASI PERTAMA
 
-     public Produk(String kd_produk,String nama_produk,String merk_produk, String jenis_produk,
-             String variasi_produk,String foto_produk){
+     public Produk(String tipe_produk,String nama_produk,String merk_produk, String jenis_produk,
+             String kelompok_produk, String stok_produk,int harga_produk,String foto_produk,String deskripsi_produk){
 
-         this.kd_produk = kd_produk;
+         this.tipe_produk = tipe_produk;
          this.nama_produk = nama_produk;
          this.merk_produk = merk_produk;
          this.jenis_produk = jenis_produk;
-         this.variasi_produk = variasi_produk;
+         this.kelompok_produk = kelompok_produk;
+         this.stok_produk = stok_produk;
+         this.harga_produk = harga_produk;
          this.foto_produk = foto_produk;
+         this.deskripsi_produk = deskripsi_produk;
      }
      public int getId(){
 
@@ -39,7 +44,7 @@ public class Produk {
 
 
     //GET CODE TB_PRODUK
-    public String getKd_produk(){return kd_produk; }
+    public String getTipe_produk(){return tipe_produk; }
     public String getNama_produk(){return nama_produk;}
     public String getMerk_produk(){
         return merk_produk;
@@ -47,16 +52,17 @@ public class Produk {
     public String getJenis_produk(){
         return jenis_produk;
     }
-    public String getVariasi_produk(){
-        return variasi_produk;
-    }
+    public String getKelompok_produk(){ return kelompok_produk; }
+    public String getStok_produk(){return stok_produk;}
+    public int getHarga_produk(){return harga_produk;}
     public String getFoto_produk(){
         return foto_produk;
     }
+    public String getDeskripsi_produk() { return deskripsi_produk;}
 
     //SET CODE TB_PRODUK
-    public void setKd_produk(String kd_produk){
-        this.kd_produk = kd_produk;
+    public void setTipe_produk(String tipe_produk){
+        this.tipe_produk = tipe_produk;
     }
     public void setNama_produk(String nama_produk ){
         this.nama_produk = nama_produk;
@@ -67,11 +73,15 @@ public class Produk {
     public void setJenis_produk(String jenis_produk){
         this.jenis_produk = jenis_produk;
     }
-    public void setVariasi_produk(String variasi_produk){
-        this.variasi_produk = variasi_produk ;
+    public void setKelompok_produk(String kelompok_produk){ this.kelompok_produk = kelompok_produk; }
+    public void setStok_produk(String stok_produk){
+        this.stok_produk = stok_produk ;
+    }
+    public void setHarga_produk(int harga_produk){
+        this.harga_produk = harga_produk ;
     }
     public void setFoto_produk (String foto_produk){
         this.foto_produk = foto_produk;
     }
-
+    public void setDeskripsi_produk(String deskripsi_produk){this.deskripsi_produk = deskripsi_produk;}
 }

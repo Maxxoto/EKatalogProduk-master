@@ -3,15 +3,26 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorOrangeFruit</item>
-        <item name="colorPrimaryDark">@color/colorOrangeDark</item>
+        <item name="colorPrimary">@color/colorAndroidGreen</item>
+        <item name="colorPrimaryDark">@color/colorGreenTurqoise</item>
         <item name="colorAccent">@color/colorRedCrimson</item>
     </style>
 
+    <!--SPLASH SCREEN THEME-->
+    <!--<style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">-->
+    <!--<item name="android:windowBackground">@drawable/ic_launcher_background</item>-->
+    <!--</style>-->
+    <!--SPLASH SCREEN THEME-->
     <style name="AppTheme.NoActionBar">
-        <item name="colorPrimary">@color/colorOrangeFruit</item>
-        <item name="colorPrimaryDark">@color/colorOrangeDark</item>
+        <item name="colorPrimary">@color/colorAndroidGreen</item>
+        <item name="colorPrimaryDark">@color/colorGreenTurqoise</item>
 
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBarSplash">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
