@@ -148,7 +148,6 @@ public class ActivityMenu extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_import) {
             OpenFilePicker();
-
         } else if (id == R.id.nav_export) {
             ExportData();
             Toast.makeText(ActivityMenu.this, "Data Berhasil di Export", Toast.LENGTH_LONG).show();
@@ -156,6 +155,10 @@ public class ActivityMenu extends AppCompatActivity
         } else if (id == R.id.nav_purge) {
             dbHandler.hapusSemuaDataProduk();
             Toast.makeText(ActivityMenu.this, "Berhasil menghapus semua data produk", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_find){
+            Intent intent = new Intent(ActivityMenu.this, ActivitySearch.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_aboutus) {
 
         } else if (id == R.id.nav_contactus) {

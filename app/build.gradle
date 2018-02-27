@@ -20,7 +20,7 @@ android {
 
 repositories {
     maven {
-        url  "http://dl.bintray.com/lukaville/maven"
+        url "http://dl.bintray.com/lukaville/maven"
     }
 }
 dependencies {
@@ -43,10 +43,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
 
 
-//    compile('ru.bartwell:exfilepicker:2.1'){
-//        exclude group: "com.android.support","com.github.bumptech.glide:glide:3.7.0"
-//    compile 'com.droidninja:filepicker:2.1.2'
-//    compile 'com.nononsenseapps:filepicker:4.1.0'
 }
 
 

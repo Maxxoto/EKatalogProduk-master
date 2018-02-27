@@ -22,7 +22,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     private Context context;
     private SQLiteDatabase database;
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "db_ekatalog"; // NAMA DATABASE
     private static final String TABLE_PRODUK = "tb_produk"; // NAMA TABEL
     private static final String COLUMN_ID = "id_produk"; // NAMA KOLOM ID
@@ -31,6 +31,8 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_MERK = "merk_produk"; //MERK PRODUK
     private static final String COLUMN_JENIS = "jenis_produk"; //JENIS PRODUK
     private static final String COLUMN_KELOMPOK = "kelompok_produk";
+    private static final String COLUMN_SUBKELOMPOK = "subkelompok_produk"; //SUBKELOMPOK PRODUK
+    private static final String COLUMN_PERKEMASAN = "perkemasan_produk";
     private static final String COLUMN_STOK = "stok_produk";
     private static final String COLUMN_HARGA = "harga_produk";
     private static final String COLUMN_FOTO = "foto_produk"; // FOTO PRODUK
@@ -51,6 +53,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_MERK + " TEXT, "
                 + COLUMN_JENIS + " TEXT, "
                 + COLUMN_KELOMPOK + " TEXT, "
+                + COLUMN_SUBKELOMPOK + " TEXT, "
+                + COLUMN_PERKEMASAN + " TEXT, "
                 + COLUMN_STOK + " INTEGER, "
                 + COLUMN_HARGA + " INTEGER, "
                 + COLUMN_FOTO + " TEXT, "
@@ -76,6 +80,8 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_MERK, produk.getMerk_produk());
         values.put(COLUMN_JENIS, produk.getJenis_produk());
         values.put(COLUMN_KELOMPOK, produk.getKelompok_produk());
+        values.put(COLUMN_SUBKELOMPOK, produk.getSubkelompok_produk());
+        values.put(COLUMN_PERKEMASAN, produk.getPerkemasan_produk());
         values.put(COLUMN_STOK, produk.getStok_produk());
         values.put(COLUMN_HARGA, produk.getHarga_produk());
         values.put(COLUMN_FOTO, produk.getFoto_produk());
@@ -91,13 +97,13 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_PRODUK, new String[]{COLUMN_ID, COLUMN_TIPE ,COLUMN_NAMA, COLUMN_MERK
-                ,COLUMN_JENIS,COLUMN_KELOMPOK, COLUMN_STOK , COLUMN_HARGA , COLUMN_FOTO , COLUMN_DESC },
+                ,COLUMN_JENIS,COLUMN_KELOMPOK,COLUMN_SUBKELOMPOK, COLUMN_STOK , COLUMN_HARGA , COLUMN_FOTO , COLUMN_DESC },
                 COLUMN_ID + "=?", new String[]{String.valueOf(id_produk)}, null, null,null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Produk produk = new Produk(cursor.getString(1), cursor.getString(2),cursor.getString(3),
-                cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getInt(7),cursor.getString(8),cursor.getString(9));
+                cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
         return produk;
     }
 
@@ -113,7 +119,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             do {
                 Produk produk = new Produk(cursor.getString(1), cursor.getString(2),cursor.getString(3),
-                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getInt(7),cursor.getString(8),cursor.getString(9));
+                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
                 produkList.add(produk);
             } while (cursor.moveToNext());
         }
@@ -141,6 +147,8 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_MERK, produk.getMerk_produk());
         values.put(COLUMN_JENIS, produk.getJenis_produk());
         values.put(COLUMN_KELOMPOK, produk.getKelompok_produk());
+        values.put(COLUMN_SUBKELOMPOK, produk.getSubkelompok_produk());
+        values.put(COLUMN_PERKEMASAN , produk.getPerkemasan_produk());
         values.put(COLUMN_STOK, produk.getStok_produk());
         values.put(COLUMN_HARGA, produk.getHarga_produk());
         values.put(COLUMN_FOTO, produk.getFoto_produk());
@@ -176,7 +184,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Produk kategori = new Produk(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5),cursor.getString(6), cursor.getInt(7),cursor.getString(8),cursor.getString(9));
+                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
                 kategoriList.add(kategori);
             } while (cursor.moveToNext());
         }
@@ -188,20 +196,21 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //TODO : MENGAMBIL DATA UNTUK ACTIVITY LIST PRODUK
 
-    public List<Produk> getListProduk(String mJenisProduk,String mMerkProduk,String mKelompokProduk) {
+    public List<Produk> getListProduk(String mJenisProduk,String mMerkProduk,String mKelompokProduk,String mSubKelompokProduk) {
 
         List<Produk> listList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_PRODUK + " WHERE " + COLUMN_JENIS + " = ? AND " + COLUMN_MERK + " = ? AND "
-                + COLUMN_KELOMPOK + " = ? " + " GROUP BY " + COLUMN_TIPE + " ORDER BY tipe_produk ASC " ;
+                + COLUMN_KELOMPOK + " = ? AND " + COLUMN_SUBKELOMPOK + " = ? "
+                + " GROUP BY " + COLUMN_TIPE + " ORDER BY tipe_produk ASC " ;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery,new String[]{ mJenisProduk,mMerkProduk,mKelompokProduk } );
+        Cursor cursor = db.rawQuery(selectQuery,new String[]{ mJenisProduk,mMerkProduk,mKelompokProduk,mSubKelompokProduk } );
 
 
 
         if (cursor.moveToFirst()) {
             do {
                 Produk list = new Produk(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4),cursor.getString(5), cursor.getString(6), cursor.getInt(7),cursor.getString(8),cursor.getString(9));
+                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
                 listList.add(list);
             } while (cursor.moveToNext());
         }
@@ -211,19 +220,20 @@ public class DBHandler extends SQLiteOpenHelper {
     }
     //TODO : MENGAMBIL DATA UNTUK ACTIVTY DETAIL PRODUK
 
-    public List<Produk> getDetailProduk(String mTipeProduk,String mMerkProduk, String mJenisProduk,String mKelompokProduk) {
+    public List<Produk> getDetailProduk(String mTipeProduk,String mMerkProduk, String mJenisProduk,String mKelompokProduk,String mSubKelompokProduk) {
 
         List<Produk> detailList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_PRODUK + " WHERE " + COLUMN_TIPE + " = ? AND "
-                + COLUMN_MERK + " = ? AND " + COLUMN_JENIS + " = ? AND " + COLUMN_KELOMPOK + " = ? "
+                + COLUMN_MERK + " = ? AND " + COLUMN_JENIS + " = ? AND " + COLUMN_KELOMPOK + " = ? AND "
+                + COLUMN_SUBKELOMPOK + " = ? "
                 + " ORDER BY nama_produk ASC ";
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery,new String[]{mTipeProduk,mMerkProduk,mJenisProduk,mKelompokProduk});
+        Cursor cursor = db.rawQuery(selectQuery,new String[]{mTipeProduk,mMerkProduk,mJenisProduk,mKelompokProduk,mSubKelompokProduk});
 
         if (cursor.moveToFirst()){
             do {
                 Produk list = new Produk(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5),cursor.getString(6), cursor.getInt(7),cursor.getString(8),cursor.getString(9));
+                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
                 detailList.add(list);
             } while (cursor.moveToNext());
         }
@@ -242,7 +252,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Produk list = new Produk(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4),cursor.getString(5), cursor.getString(6), cursor.getInt(7),cursor.getString(8),cursor.getString(9));
+                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
                 kelompokList.add(list);
             } while (cursor.moveToNext());
         }
@@ -250,6 +260,44 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
     }
+
+    public List<Produk> getSubkelompokProduk (String mMerkProduk,String mJenisProduk,String mKelompokProduk){
+        List<Produk> SubkelompokList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PRODUK + " WHERE " + COLUMN_JENIS + " = ? AND " + COLUMN_MERK + " = ? AND "
+                + COLUMN_KELOMPOK + " = ? "
+                + " GROUP BY " + COLUMN_SUBKELOMPOK + " ORDER BY subkelompok_produk ASC " ;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,new String[]{ mJenisProduk,mMerkProduk,mKelompokProduk} );
+
+        if (cursor.moveToFirst()) {
+            do {
+                Produk list = new Produk(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
+                SubkelompokList.add(list);
+            } while (cursor.moveToNext());
+        }
+        return SubkelompokList;
+    }
+
+    public List<Produk> getSearchProduk() {
+
+        List<Produk> searchList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PRODUK
+                + " ORDER BY nama_produk ASC ";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,new String[]{});
+
+        if (cursor.moveToFirst()){
+            do {
+                Produk list = new Produk(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4),cursor.getString(5),cursor.getString(6), cursor.getString(7),cursor.getString(8),cursor.getInt(9),cursor.getString(10),cursor.getString(11));
+                searchList.add(list);
+            } while (cursor.moveToNext());
+        }
+        return searchList;
+    }
+
+
 
     public DBHandler open() throws SQLException {
         database = this.getWritableDatabase();

@@ -45,6 +45,7 @@ public class ActivityDetail extends AppCompatActivity {
     String mMerkProduk;
     String mJenisProduk;
     String mKelompokProduk;
+    String mSubKelompokProduk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class ActivityDetail extends AppCompatActivity {
             mMerkProduk = bundle.getString(Constant.BUNDLE_MERK_PRODUK);
             mJenisProduk = bundle.getString(Constant.BUNDLE_JENIS_PRODUK);
             mKelompokProduk = bundle.getString(Constant.BUNDLE_KELOMPOK_PRODUK);
+            mSubKelompokProduk = bundle.getString(Constant.BUNDLE_SUBKELOMPOK_PRODUK);
 
             dbHandler = new DBHandler(this);
 
@@ -78,7 +80,7 @@ public class ActivityDetail extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         dbHandler = new DBHandler(ActivityDetail.this);
-        detailList = dbHandler.getDetailProduk(mTipeProduk,mMerkProduk,mJenisProduk,mKelompokProduk);
+        detailList = dbHandler.getDetailProduk(mTipeProduk,mMerkProduk,mJenisProduk,mKelompokProduk,mSubKelompokProduk);
         adapter = new DetailAdapter(detailList, ActivityDetail.this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

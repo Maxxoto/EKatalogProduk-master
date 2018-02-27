@@ -94,7 +94,7 @@ public class ActivityKelompok extends AppCompatActivity {
                             bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
                             bundle.putString(Constant.BUNDLE_KELOMPOK_PRODUK, adapter.getItem(position).getKelompok_produk());
 
-                            Intent intent = new Intent(ActivityKelompok.this, ActivityList.class);
+                            Intent intent = new Intent(ActivityKelompok.this, ActivitySubkelompok.class);
                             intent.putExtras(bundle);
                             startActivity(intent);
 

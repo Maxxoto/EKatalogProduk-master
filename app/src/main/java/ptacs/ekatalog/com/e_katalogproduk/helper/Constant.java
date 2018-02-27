@@ -11,6 +11,7 @@ public class Constant {
     public static final String BUNDLE_JENIS_PRODUK = "jenisproduk";
     public static final String BUNDLE_FOTO_PRODUK = "fotoproduk";
     public static final String BUNDLE_KELOMPOK_PRODUK = "kelompokproduk";
+    public static final String BUNDLE_SUBKELOMPOK_PRODUK = "subkelompokproduk";
 }
 
 

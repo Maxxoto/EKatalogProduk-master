@@ -12,4 +12,6 @@
     <string name="title_activity_list">ActivityList</string>
     <string name="title_activity_detail">ActivityDetail</string>
     <string name="title_activity_kelompok">ActivityKelompok</string>
+    <string name="title_activity_subkelompok">ActivitySubkelompok</string>
+    <string name="title_activity_search">ActivitySearch</string>
 </resources>

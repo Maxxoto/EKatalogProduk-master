@@ -38,6 +38,7 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
     String mJenisProduk;
     String mMerkProduk;
     String mKelompokProduk;
+    String mSubKelompokProduk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,11 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
             mJenisProduk = bundle.getString(Constant.BUNDLE_JENIS_PRODUK);
             mMerkProduk = bundle.getString(Constant.BUNDLE_MERK_PRODUK);
             mKelompokProduk = bundle.getString(Constant.BUNDLE_KELOMPOK_PRODUK);
+            mSubKelompokProduk = bundle.getString(Constant.BUNDLE_SUBKELOMPOK_PRODUK);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(mKelompokProduk);
+        setTitle(mSubKelompokProduk);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dbHandler = new DBHandler(this);
             }
@@ -68,7 +70,7 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         dbHandler = new DBHandler(ActivityList.this);
-        listList = dbHandler.getListProduk(mJenisProduk,mMerkProduk,mKelompokProduk);
+        listList = dbHandler.getListProduk(mJenisProduk,mMerkProduk,mKelompokProduk,mSubKelompokProduk);
         adapter = new ListAdapter(listList, ActivityList.this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -132,6 +134,7 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
                             bundle.putString(Constant.BUNDLE_MERK_PRODUK, adapter.getItem(position).getMerk_produk());
                             bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
                             bundle.putString(Constant.BUNDLE_KELOMPOK_PRODUK, adapter.getItem(position).getKelompok_produk());
+                            bundle.putString(Constant.BUNDLE_SUBKELOMPOK_PRODUK, adapter.getItem(position).getSubkelompok_produk());
 
 
                             Intent intent = new Intent(ActivityList.this, ActivityDetail.class);

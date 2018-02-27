@@ -52,12 +52,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailView
         holder.txt_rMerk.setText(detailList.get(position).getMerk_produk());
         holder.txt_rJenis.setText(detailList.get(position).getJenis_produk());
         holder.txt_rStok.setText(detailList.get(position).getStok_produk());
+        holder.txt_rPerkemasan.setText(detailList.get(position).getPerkemasan_produk());
+
 //        holder.txt_rHarga.setText(detailList.get(position).getHarga_produk());
 
         Locale localeID = new Locale("in","ID");
 
         NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
         holder.txt_rHarga.setText(formatRupiah.format((double)detailList.get(position).getHarga_produk()));
+
 
 //        String currentUrl = detailList.get(position).getFoto_produk();
 
@@ -75,6 +78,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailView
         return detailList.size();
     }
 
+    public void  setFilter(List<Produk> searchList){
+        detailList = new ArrayList<>();
+        detailList.addAll(searchList);
+        notifyDataSetChanged();
+    }
+
     public Produk getItem(int Position) {
         return detailList.get(Position);
     }
@@ -88,6 +97,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailView
         TextView txt_rJenis;
         TextView txt_rStok;
         TextView txt_rHarga;
+        TextView txt_rPerkemasan;
 //        ImageView iv_rFoto;
 
 
@@ -102,6 +112,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailView
             txt_rJenis = (TextView) itemView.findViewById(R.id.txt_resultjenis);
             txt_rStok  = (TextView) itemView.findViewById(R.id.txt_resultstok);
             txt_rHarga = (TextView) itemView.findViewById(R.id.txt_resultharga);
+            txt_rPerkemasan = (TextView) itemView.findViewById(R.id.txt_resultkemasan);
 //            iv_rFoto = (ImageView) itemView.findViewById(R.id.IvFoto);
         }
     }

@@ -20,7 +20,11 @@
         <item
             android:id="@+id/nav_purge"
             android:icon="@drawable/ic_purge"
-            android:title="Purge Database" />
+            android:title="Hapus Database" />
+        <item
+            android:id="@+id/nav_find"
+            android:icon="@drawable/ic_search"
+            android:title="Pencarian Produk"/>
     </group>
 
     <item android:title="Developer">
