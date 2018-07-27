@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.ajts.androidmads.library.ExcelToSQLite;
 import com.ajts.androidmads.library.SQLiteToExcel;
+import com.karumi.dexter.Dexter;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
@@ -61,6 +62,12 @@ public class ActivityMenu extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        //TODO DEXTER PERMISSION BUILDER
+//        Dexter.withActivity(ActivityMenu.this)
+//                .withPermission(permission)
+//                .withListener(listener)
+//                .check();
 
         alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -265,36 +272,41 @@ public class ActivityMenu extends AppCompatActivity
 
     // FUNGSI INI UNTUK MENGECEK APAKAH ADA DATA DI DALEM RECYCLERVIEW ATAU TIDAK
     public void ClickListener(){
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // TODO Handle item click
+        recyclerView.setVisibility(View.VISIBLE);
 
-                        Bundle bundle = new Bundle();
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                recyclerView, new RecyclerItemClickListener.ClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
 
-                        //COMMIT MAS INDRA CS
+                //COMMIT MAS INDRA CS
 
-                        bundle.putString(Constant.BUNDLE_MERK_PRODUK, adapter.getItem(position).getMerk_produk());
+                bundle.putString(Constant.BUNDLE_MERK_PRODUK, adapter.getItem(position).getMerk_produk());
 
-                        Intent intent = new Intent(ActivityMenu.this, ActivityKategori.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                Intent intent = new Intent(ActivityMenu.this, ActivityKategori.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
 
-                    }
-                })
-        );
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(ActivityMenu.this,"Ini Long Click",Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
+
     private void cekDataRecyclerView(){
 
         if (adapter.getItemCount() == 0) {
             txt_resultadapter.setVisibility(View.GONE);
-            txt_judul.setVisibility(View.GONE);
+//            txt_judul.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 
         }else {
             txt_resultadapter.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            txt_judul.setVisibility(View.VISIBLE);
+//            txt_judul.setVisibility(View.VISIBLE);
             ClickListener();
         }
 

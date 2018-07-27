@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,26 +80,27 @@ import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
          } else {
              recyclerView.setVisibility(View.VISIBLE);
 
-             recyclerView.addOnItemTouchListener(
-                     new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                         @Override
-                         public void onItemClick(View view, int position) {
-                             // TODO Handle item click
+             recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                     recyclerView, new RecyclerItemClickListener.ClickListener() {
+                 @Override
+                 public void onItemClick(View view, int position) {
+                     Bundle bundle = new Bundle();
 
-                             Bundle bundle = new Bundle();
+                     //COMMIT MAS INDRA CS
 
-                             //COMMIT MAS INDRA CS
+                     bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
+                     bundle.putString(Constant.BUNDLE_MERK_PRODUK,adapter.getItem(position).getMerk_produk());
 
-                             bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
-                             bundle.putString(Constant.BUNDLE_MERK_PRODUK,adapter.getItem(position).getMerk_produk());
+                     Intent intent = new Intent(ActivityKategori.this, ActivityKelompok.class);
+                     intent.putExtras(bundle);
+                     startActivity(intent);
+                 }
 
-                             Intent intent = new Intent(ActivityKategori.this, ActivityKelompok.class);
-                             intent.putExtras(bundle);
-                             startActivity(intent);
-
-                         }
-                     })
-             );
+                 @Override
+                 public void onItemLongClick(View view, int position) {
+                     Toast.makeText(ActivityKategori.this,"Ini Long Click",Toast.LENGTH_SHORT).show();
+                 }
+             }));
          }
 
          swLayout2 = (SwipeRefreshLayout) findViewById(R.id.sw_layout2);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ptacs.ekatalog.com.e_katalogproduk">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -59,10 +60,6 @@
                 android:value=".activity.ActivityMenu" />
         </activity>
         <activity
-            android:name=".activity.ActivitySubkelompok"
-            android:label="@string/title_activity_subkelompok"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activity.ActivitySearch"
             android:label="@string/title_activity_search"
             android:theme="@style/AppTheme.NoActionBar">
@@ -70,6 +67,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.ActivityMenu" />
         </activity>
+        <activity android:name=".activity.ActivityPreview"></activity>
     </application>
 
 </manifest>

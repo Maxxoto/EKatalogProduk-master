@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -45,7 +46,6 @@ public class ActivityDetail extends AppCompatActivity {
     String mMerkProduk;
     String mJenisProduk;
     String mKelompokProduk;
-    String mSubKelompokProduk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,6 @@ public class ActivityDetail extends AppCompatActivity {
             mMerkProduk = bundle.getString(Constant.BUNDLE_MERK_PRODUK);
             mJenisProduk = bundle.getString(Constant.BUNDLE_JENIS_PRODUK);
             mKelompokProduk = bundle.getString(Constant.BUNDLE_KELOMPOK_PRODUK);
-            mSubKelompokProduk = bundle.getString(Constant.BUNDLE_SUBKELOMPOK_PRODUK);
 
             dbHandler = new DBHandler(this);
 
@@ -80,7 +79,7 @@ public class ActivityDetail extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         dbHandler = new DBHandler(ActivityDetail.this);
-        detailList = dbHandler.getDetailProduk(mTipeProduk,mMerkProduk,mJenisProduk,mKelompokProduk,mSubKelompokProduk);
+        detailList = dbHandler.getDetailProduk(mTipeProduk,mMerkProduk,mJenisProduk,mKelompokProduk);
         adapter = new DetailAdapter(detailList, ActivityDetail.this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -93,16 +92,18 @@ public class ActivityDetail extends AppCompatActivity {
         } else {
             recyclerView.setVisibility(View.VISIBLE);
 
-            recyclerView.addOnItemTouchListener(
-                    new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            // TODO Handle item click
+            recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                    recyclerView, new RecyclerItemClickListener.ClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
 
+                }
 
-                        }
-                    })
-            );
+                @Override
+                public void onItemLongClick(View view, int position) {
+                    Toast.makeText(ActivityDetail.this,"Ini Long Click",Toast.LENGTH_SHORT).show();
+                }
+            }));
         }
 
         swLayout4 = (SwipeRefreshLayout) findViewById(R.id.sw_layout4);

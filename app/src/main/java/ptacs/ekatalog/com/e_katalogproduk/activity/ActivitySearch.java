@@ -1,5 +1,6 @@
 package ptacs.ekatalog.com.e_katalogproduk.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -110,16 +112,18 @@ public class ActivitySearch extends AppCompatActivity implements SearchView.OnQu
         } else {
             recyclerView.setVisibility(View.VISIBLE);
 
-            recyclerView.addOnItemTouchListener(
-                    new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            // TODO Handle item click
+            recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                    recyclerView, new RecyclerItemClickListener.ClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
 
+                }
 
-                        }
-                    })
-            );
+                @Override
+                public void onItemLongClick(View view, int position) {
+                    Toast.makeText(ActivitySearch.this,"Ini Long Click",Toast.LENGTH_SHORT).show();
+                }
+            }));
         }
 
         swLayoutsearch = (SwipeRefreshLayout) findViewById(R.id.sw_layoutsearch);

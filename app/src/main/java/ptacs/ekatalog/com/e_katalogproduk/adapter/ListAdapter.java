@@ -7,13 +7,12 @@
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.ImageView;
-    import android.widget.ListView;
     import android.widget.TextView;
 
     import com.bumptech.glide.Glide;
+    import com.github.chrisbanes.photoview.PhotoView;
 
     import ptacs.ekatalog.com.e_katalogproduk.R;
-    import ptacs.ekatalog.com.e_katalogproduk.activity.ActivityList;
     import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
 
     import java.util.ArrayList;
@@ -50,10 +49,16 @@
             holder.txt_rDeskripsi.setText(listList.get(position).getDeskripsi_produk());
             String currentUrl = listList.get(position).getFoto_produk();
 
+            //INITIALISASI
+
 
             Glide.with(mContext)
                     .load(currentUrl)
                     .into(holder.iv_rFoto);
+
+
+
+
 
 
 
@@ -81,7 +86,7 @@
 
             TextView txt_rTipe;
             TextView txt_rDeskripsi;
-            ImageView iv_rFoto;
+            PhotoView iv_rFoto;
 
 
 
@@ -91,7 +96,8 @@
 
                 txt_rTipe = (TextView) itemView.findViewById(R.id.txt_resulttipe);
                 txt_rDeskripsi = (TextView) itemView.findViewById(R.id.txt_resultdeskripsi);
-                iv_rFoto = (ImageView) itemView.findViewById(R.id.txt_resultfoto);
+                iv_rFoto = (PhotoView)itemView.findViewById(R.id.txt_resultfoto);
+
             }
         }
 

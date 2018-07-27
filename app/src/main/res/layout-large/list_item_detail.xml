@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/list_layout"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardUseCompatPadding="true"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical"
+            >
+            <!--<ImageView-->
+                <!--android:id="@+id/IvFoto"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:maxHeight="350px"-->
+                <!--android:maxWidth="250px"-->
+                <!--android:minHeight="350px"-->
+                <!--android:minWidth="250px"-->
+                <!--android:layout_below="@id/txt_resultmerk"-->
+                <!--android:src="@color/colorAndroidGreen"-->
+                <!--/>-->
+
+
+            <TextView
+                android:id="@+id/txt_resultmerk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[MERK PRODUK|]"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txt_lbltipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipe Produk :"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity=""
+                    />
+                <TextView
+                android:id="@+id/txt_resulttipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[Tipe Produk]"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_resultnama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[Nama Produk]"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/txt_resulttipe"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                />
+
+            <TextView
+                android:id="@+id/txt_resultjenis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[Jenis Produk]"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/txt_resultnama"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_lblkemasan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Isi Perkemasan :"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                />
+            <TextView
+                android:id="@+id/txt_resultkemasan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                />
+
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_lblstok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stok : "
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                />
+            <TextView
+                android:id="@+id/txt_resultstok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[Stok_Produk]"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_lblharga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Harga : "
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/colorRedCrimson"/>
+
+            <TextView
+                android:id="@+id/txt_resultharga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[Harga Produk]"
+                android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorRedCrimson"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

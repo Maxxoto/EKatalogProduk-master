@@ -1,5 +1,7 @@
 package ptacs.ekatalog.com.e_katalogproduk.activity;
 
+
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.LinearLayout;
 import android.support.v7.widget.SearchView;
+
+import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +40,10 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
     private DBHandler dbHandler;
     private List<Produk> listList = new ArrayList<>();
 
+    String globalurl;
     String mJenisProduk;
     String mMerkProduk;
     String mKelompokProduk;
-    String mSubKelompokProduk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +55,10 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
             mJenisProduk = bundle.getString(Constant.BUNDLE_JENIS_PRODUK);
             mMerkProduk = bundle.getString(Constant.BUNDLE_MERK_PRODUK);
             mKelompokProduk = bundle.getString(Constant.BUNDLE_KELOMPOK_PRODUK);
-            mSubKelompokProduk = bundle.getString(Constant.BUNDLE_SUBKELOMPOK_PRODUK);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(mSubKelompokProduk);
+        setTitle(mKelompokProduk);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dbHandler = new DBHandler(this);
             }
@@ -70,7 +74,7 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         dbHandler = new DBHandler(ActivityList.this);
-        listList = dbHandler.getListProduk(mJenisProduk,mMerkProduk,mKelompokProduk,mSubKelompokProduk);
+        listList = dbHandler.getListProduk(mJenisProduk,mMerkProduk,mKelompokProduk);
         adapter = new ListAdapter(listList, ActivityList.this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -114,6 +118,7 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
 
 
 
+
     private void cekDataRecyclerView() {
 
         if (adapter.getItemCount() == 0) {
@@ -121,29 +126,37 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
         } else {
             recyclerView.setVisibility(View.VISIBLE);
 
-            recyclerView.addOnItemTouchListener(
-                    new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            // TODO Handle item click
-                            Bundle bundle = new Bundle();
+            recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                    recyclerView, new RecyclerItemClickListener.ClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    // TODO Handle item click
+                    Bundle bundle = new Bundle();
 
-                            //COMMIT MAS INDRA CS
+                    //COMMIT MAS INDRA CS
 
-                            bundle.putString(Constant.BUNDLE_TIPE_PRODUK, adapter.getItem(position).getTipe_produk());
-                            bundle.putString(Constant.BUNDLE_MERK_PRODUK, adapter.getItem(position).getMerk_produk());
-                            bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
-                            bundle.putString(Constant.BUNDLE_KELOMPOK_PRODUK, adapter.getItem(position).getKelompok_produk());
-                            bundle.putString(Constant.BUNDLE_SUBKELOMPOK_PRODUK, adapter.getItem(position).getSubkelompok_produk());
+                    bundle.putString(Constant.BUNDLE_TIPE_PRODUK, adapter.getItem(position).getTipe_produk());
+                    bundle.putString(Constant.BUNDLE_MERK_PRODUK, adapter.getItem(position).getMerk_produk());
+                    bundle.putString(Constant.BUNDLE_JENIS_PRODUK, adapter.getItem(position).getJenis_produk());
+                    bundle.putString(Constant.BUNDLE_KELOMPOK_PRODUK, adapter.getItem(position).getKelompok_produk());
 
 
-                            Intent intent = new Intent(ActivityList.this, ActivityDetail.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+                    Intent intent = new Intent(ActivityList.this, ActivityDetail.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
 
-                        }
-                    })
-            );
+                @Override
+                public void onItemLongClick(View view, int position) {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constant.BUNDLE_FOTO_PRODUK, adapter.getItem(position).getFoto_produk());
+                    Intent intent = new Intent(ActivityList.this, ActivityPreview.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            }));
         }
 
         swLayout3 = (SwipeRefreshLayout) findViewById(R.id.sw_layout3);
@@ -168,7 +181,19 @@ public class ActivityList extends AppCompatActivity implements SearchView.OnQuer
         });
     }
 
-
+//    void DialogImage(String globalurl) {
+//        globalurl = "http://hasanbasrielectric.com/wp-content/uploads/2017/11/Lampu-Philips-Essential-8-watt.jpg";
+//        Dialog ImageDialog = new Dialog(this);
+//        ImageDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//
+//        PhotoView IvPre = (PhotoView) findViewById(R.id.IvPreview);
+//
+//
+//
+//        ImageDialog.setContentView(getLayoutInflater().inflate(R.layout.preview_image
+//                , null));
+//        ImageDialog.show();
+//    }
 
 
 }

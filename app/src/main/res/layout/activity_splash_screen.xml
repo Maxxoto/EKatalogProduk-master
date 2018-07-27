@@ -12,23 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/flatback"/>
+        android:src="@drawable/flatback1"/>
 
 
-    <TextView
-        android:text="APLIKASI E-KATALOG"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvSplash"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:fontFamily="Roboto-bold"
-        android:textStyle="bold|italic"
-        android:textColor="@color/colorDarkGrey"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp" />
+
 
     <ProgressBar
         android:id="@+id/progresBar1"
