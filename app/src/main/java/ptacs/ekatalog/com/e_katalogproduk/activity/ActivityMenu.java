@@ -1,9 +1,15 @@
 package ptacs.ekatalog.com.e_katalogproduk.activity;
 
+import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -24,8 +30,15 @@ import android.widget.Toast;
 import com.ajts.androidmads.library.ExcelToSQLite;
 import com.ajts.androidmads.library.SQLiteToExcel;
 import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,13 +74,11 @@ public class ActivityMenu extends AppCompatActivity
 
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_menu);
 
-        //TODO DEXTER PERMISSION BUILDER
-//        Dexter.withActivity(ActivityMenu.this)
-//                .withPermission(permission)
-//                .withListener(listener)
-//                .check();
+
+
 
         alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -98,6 +109,79 @@ public class ActivityMenu extends AppCompatActivity
             //super.onBackPressed();
             Exit();
         }
+    }
+
+    private void CheckPermission (){
+    Dexter.withActivity(this)
+            .withPermissions(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.INTERNET)
+                .withListener(new MultiplePermissionsListener() {
+        @Override
+        public void onPermissionsChecked(MultiplePermissionsReport report) {
+            // check if all permissions are granted
+            if (report.areAllPermissionsGranted()) {
+                // do you work now
+                Toast.makeText(getApplicationContext(), "All permissions are granted!", Toast.LENGTH_SHORT).show();
+                //Openfiledialog
+                OpenFilePicker();
+
+            }
+
+            // check for permanent denial of any permission
+            if (report.isAnyPermissionPermanentlyDenied()) {
+                // permission is denied permenantly, navigate user to app settings
+                showSettingsDialog();
+            }
+        }
+
+        @Override
+        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+            token.continuePermissionRequest();
+        }
+    })
+
+            .withErrorListener(new PermissionRequestErrorListener() {
+        @Override
+        public void onError(DexterError error){
+            Toast.makeText(getApplicationContext(),"Error Occured !" + error.toString(),Toast.LENGTH_SHORT).show();
+        }
+
+    })
+            .onSameThread()
+        .check();
+    }
+
+    //TODO PERMISSION BUILDER
+
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMenu.this);
+        builder.setTitle("Need Permissions");
+        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
+        builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                openSettings();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+    // navigating user to app settings
+    private void openSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, 101);
     }
 
     private void Exit() {
@@ -154,7 +238,8 @@ public class ActivityMenu extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_import) {
-            OpenFilePicker();
+            CheckPermission();
+            //OpenFilePicker();
         } else if (id == R.id.nav_export) {
             ExportData();
             Toast.makeText(ActivityMenu.this, "Data Berhasil di Export", Toast.LENGTH_LONG).show();
@@ -225,7 +310,8 @@ public class ActivityMenu extends AppCompatActivity
 
                 @Override
                 public void onCompleted(String dbName) {
-                    Toast.makeText(ActivityMenu.this, "Import Telah Berhasil ke Database " + DBHandler.DATABASE_NAME, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActivityMenu.this, "Import Telah Berhasil ke Database" + DBHandler.DATABASE_NAME, Toast.LENGTH_LONG).show();
+                    Restartapp();
                 }
 
                 @Override
@@ -235,6 +321,15 @@ public class ActivityMenu extends AppCompatActivity
             });
 
         }
+    }
+
+    private void Restartapp(){
+        Intent mStartActivity = new Intent(this, ActivityMenu.class);
+        int mPendingIntentId = 123456;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
     }
 
 

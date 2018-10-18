@@ -1,7 +1,5 @@
 package ptacs.ekatalog.com.e_katalogproduk.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,25 +7,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ptacs.ekatalog.com.e_katalogproduk.R;
 import ptacs.ekatalog.com.e_katalogproduk.adapter.DetailAdapter;
-import ptacs.ekatalog.com.e_katalogproduk.adapter.ListAdapter;
 import ptacs.ekatalog.com.e_katalogproduk.helper.Constant;
 import ptacs.ekatalog.com.e_katalogproduk.helper.DBHandler;
 import ptacs.ekatalog.com.e_katalogproduk.helper.RecyclerItemClickListener;
 import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
-
-import ptacs.ekatalog.com.e_katalogproduk.R;
 
 public class ActivityDetail extends AppCompatActivity {
 
@@ -42,7 +33,6 @@ public class ActivityDetail extends AppCompatActivity {
 
 
 
-    String mTipeProduk;
     String mMerkProduk;
     String mJenisProduk;
     String mKelompokProduk;
@@ -55,7 +45,6 @@ public class ActivityDetail extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
-            mTipeProduk = bundle.getString(Constant.BUNDLE_TIPE_PRODUK);
             mMerkProduk = bundle.getString(Constant.BUNDLE_MERK_PRODUK);
             mJenisProduk = bundle.getString(Constant.BUNDLE_JENIS_PRODUK);
             mKelompokProduk = bundle.getString(Constant.BUNDLE_KELOMPOK_PRODUK);
@@ -64,7 +53,7 @@ public class ActivityDetail extends AppCompatActivity {
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            setTitle(mTipeProduk);
+            setTitle(mKelompokProduk);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             dbHandler = new DBHandler(this);
         }
@@ -79,7 +68,7 @@ public class ActivityDetail extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         dbHandler = new DBHandler(ActivityDetail.this);
-        detailList = dbHandler.getDetailProduk(mTipeProduk,mMerkProduk,mJenisProduk,mKelompokProduk);
+        detailList = dbHandler.getDetailProduk(mMerkProduk,mJenisProduk,mKelompokProduk);
         adapter = new DetailAdapter(detailList, ActivityDetail.this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

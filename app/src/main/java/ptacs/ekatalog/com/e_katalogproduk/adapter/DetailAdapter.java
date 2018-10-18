@@ -47,11 +47,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailView
     @Override
     public void onBindViewHolder(DetailAdapter.DetailViewHolder holder, int position) {
 
-        holder.txt_rTipe.setText((detailList.get(position).getTipe_produk()));
         holder.txt_rNama.setText(detailList.get(position).getNama_produk());
         holder.txt_rMerk.setText(detailList.get(position).getMerk_produk());
         holder.txt_rJenis.setText(detailList.get(position).getJenis_produk());
         holder.txt_rStok.setText(detailList.get(position).getStok_produk());
+        holder.txt_rStok2.setText(detailList.get(position).getStok2_produk());
         holder.txt_rPerkemasan.setText(detailList.get(position).getPerkemasan_produk());
 
 //        holder.txt_rHarga.setText(detailList.get(position).getHarga_produk());
@@ -91,11 +91,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailView
     public static class DetailViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView txt_rTipe;
         TextView txt_rNama;
         TextView txt_rMerk;
         TextView txt_rJenis;
         TextView txt_rStok;
+        TextView txt_rStok2;
         TextView txt_rHarga;
         TextView txt_rPerkemasan;
 //        ImageView iv_rFoto;
@@ -106,11 +106,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailView
             super(itemView);
 
 
-            txt_rTipe = (TextView) itemView.findViewById(R.id.txt_resulttipe);
             txt_rNama = (TextView) itemView.findViewById(R.id.txt_resultnama);
             txt_rMerk = (TextView) itemView.findViewById(R.id.txt_resultmerk);
             txt_rJenis = (TextView) itemView.findViewById(R.id.txt_resultjenis);
             txt_rStok  = (TextView) itemView.findViewById(R.id.txt_resultstok);
+            txt_rStok2  = (TextView) itemView.findViewById(R.id.txt_resultstok2);
             txt_rHarga = (TextView) itemView.findViewById(R.id.txt_resultharga);
             txt_rPerkemasan = (TextView) itemView.findViewById(R.id.txt_resultkemasan);
 //            iv_rFoto = (ImageView) itemView.findViewById(R.id.IvFoto);

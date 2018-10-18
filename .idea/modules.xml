@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EKatalogProduk-tanpasubkelompok.iml" filepath="$PROJECT_DIR$/EKatalogProduk-tanpasubkelompok.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EKatalogProduk-tanpasubkelompok _4kategori.iml" filepath="$PROJECT_DIR$/EKatalogProduk-tanpasubkelompok _4kategori.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

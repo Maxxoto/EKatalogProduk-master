@@ -129,16 +129,50 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
                 />
+
+                <TextView
+                    android:id="@+id/txt_lblacs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ACS : "
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    />
             <TextView
                 android:id="@+id/txt_resultstok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="[Stok_Produk]"
+                android:textColor="@color/colorPrimary"
+                android:text="[ACS]"
                 android:textSize="18sp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="3dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
                 />
+
+                <TextView
+                    android:id="@+id/txt_lblmck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MCK :"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    />
+                <TextView
+                    android:id="@+id/txt_resultstok2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[MCK]"
+                    android:textColor="@color/colorRedCrimson"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
