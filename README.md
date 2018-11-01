@@ -1,5 +1,5 @@
 # EKatalogProduk-master
-
+<img src="https://travis-ci.org/Maxxoto/EKatalogProduk-master.svg?branch=master" alt="Travis-CI"> 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2a925e5ae7534e539ce07c55d9caa520)](https://app.codacy.com/app/Maxxoto/EKatalogProduk-master?utm_source=github.com&utm_medium=referral&utm_content=Maxxoto/EKatalogProduk-master&utm_campaign=Badge_Grade_Dashboard)
 
 Im Using Android Studio to Develops this Application , 
