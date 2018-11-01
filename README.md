@@ -1,5 +1,7 @@
 # EKatalogProduk-master
 
+<img src="https://travis-ci.org/Maxxoto/EKatalogProduk-master.svg?branch=master" alt="Travis-CI">
+
 Im Using Android Studio to Develops this Application , 
 
 1.Native Language(Java)
