@@ -1,8 +1,11 @@
 package ptacs.ekatalog.com.e_katalogproduk.activity;
 
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,6 +63,13 @@ public class ActivityKelompok extends AppCompatActivity {
         cekDataRecyclerView();
 
         }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     private void initRecyclerView(){
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_kelompok);
@@ -133,6 +143,16 @@ public class ActivityKelompok extends AppCompatActivity {
                     Intent intent = new Intent(ActivityKelompok.this, ActivityDetail.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
+
+//                    PendingIntent pendingIntent =
+//                            TaskStackBuilder.create(ActivityKelompok.this)
+//                                    // add all of DetailsActivity's parents to the stack,
+//                                    // followed by DetailsActivity itself
+//                                    .addNextIntentWithParentStack(intent)
+//                                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                    Notification.Builder builder = new Notification.Builder(ActivityKelompok.this);
+//                    builder.setContentIntent(pendingIntent);
                 }
 
                 @Override
@@ -143,6 +163,8 @@ public class ActivityKelompok extends AppCompatActivity {
                     Intent intent = new Intent(ActivityKelompok.this, ActivityPreview.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
+
+
                 }
 
             }));
