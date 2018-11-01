@@ -2,11 +2,13 @@
 
 Im Using Android Studio to Develops this Application , 
 
+1.Native Language(Java)
+
 Listed Library and API of this Application :
 
--GLIDE 
--ChrisbanePhoto Zoom
--OpenFileDialog
--etc.
+- GLIDE <br>
+- ChrisbanePhoto Zoom <br>
+- OpenFileDialog <br>
+- etc.<br>
 
-This is for developtment and personal purpose Only.
+<span> This is for development and personal purpose only. </span>
