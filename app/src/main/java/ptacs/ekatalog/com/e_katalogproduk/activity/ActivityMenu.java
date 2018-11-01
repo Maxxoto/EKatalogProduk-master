@@ -2,7 +2,9 @@ package ptacs.ekatalog.com.e_katalogproduk.activity;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +31,8 @@ import android.widget.Toast;
 
 import com.ajts.androidmads.library.ExcelToSQLite;
 import com.ajts.androidmads.library.SQLiteToExcel;
+
+import com.hypertrack.core_android_sdk.HyperTrackCore;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -66,17 +70,18 @@ public class ActivityMenu extends AppCompatActivity
     private TextView txt_judul;
     private AlertDialog.Builder alertDialogBuilder;
     private List<Produk> produkList = new ArrayList<>();
-
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //INITIALISASI
 
 
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
-
+        HyperTrackCore.initialize(this, "pk_d62a7cec5c6c4d026b9f7b054be36096dae95b04");
 
 
 
@@ -98,7 +103,9 @@ public class ActivityMenu extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -111,12 +118,20 @@ public class ActivityMenu extends AppCompatActivity
         }
     }
 
+
     private void CheckPermission (){
     Dexter.withActivity(this)
             .withPermissions(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.INTERNET)
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+//            Manifest.permission.GET_ACCOUNTS,
+//            Manifest.permission.ACCESS_WIFI_STATE,
+//            Manifest.permission.ACCESS_NETWORK_STATE,
+//            Manifest.permission.WAKE_LOCK
+                    )
                 .withListener(new MultiplePermissionsListener() {
         @Override
         public void onPermissionsChecked(MultiplePermissionsReport report) {
@@ -182,6 +197,7 @@ public class ActivityMenu extends AppCompatActivity
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
+
     }
 
     private void Exit() {
@@ -305,12 +321,21 @@ public class ActivityMenu extends AppCompatActivity
             excelToSQLite.importFromFile(filePath, new ExcelToSQLite.ImportListener() {
                 @Override
                 public void onStart() {
-                    Toast.makeText(ActivityMenu.this, "Importing..Tunggu Beberapa Saat Hingga Muncul Tulisan Berhasil", Toast.LENGTH_LONG).show();
+
+
+
+                        pDialog = new ProgressDialog(ActivityMenu.this);
+                        pDialog.setMessage("Mohon Menunggu.... Sedang Mengupload");
+                        pDialog.setIndeterminate(false);
+                        pDialog.setCancelable(true);
+                        pDialog.show();
+
+
                 }
 
                 @Override
                 public void onCompleted(String dbName) {
-                    Toast.makeText(ActivityMenu.this, "Import Telah Berhasil ke Database" + DBHandler.DATABASE_NAME, Toast.LENGTH_LONG).show();
+                    pDialog.dismiss();
                     Restartapp();
                 }
 
@@ -382,6 +407,7 @@ public class ActivityMenu extends AppCompatActivity
                 Intent intent = new Intent(ActivityMenu.this, ActivityKategori.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
             }
 
             @Override

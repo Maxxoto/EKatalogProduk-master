@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "ptacs.ekatalog.com.e_katalogproduk"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 2
         versionName "1.1 Beta"
@@ -22,9 +22,12 @@ repositories {
     maven {
         url "http://dl.bintray.com/lukaville/maven"
     }
-
+    maven {
+        url "http://hypertrack-core-android.s3-website-us-east-1.amazonaws.com/"
+    }
 }
 dependencies {
+
     implementation 'com.nbsp:library:1.8'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -44,6 +47,9 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     implementation 'com.karumi:dexter:5.0.0'
+    implementation('com.hypertrack.core:android:0.8.3@aar'){
+        transitive = true;
+    }
 
 
 }

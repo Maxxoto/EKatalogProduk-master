@@ -19,6 +19,7 @@
             android:name=".activity.ActivityMenu"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activity.ActivityKategori"
             android:label="@string/app_name"
@@ -26,14 +27,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.ActivityMenu" />
+
         </activity>
         <activity
             android:name=".activity.ActivityKelompok"
             android:label="@string/title_activity_list"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.ActivityMenu" />
+
         </activity>
         <activity
             android:name=".activity.SplashActivity"
@@ -50,15 +50,13 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.ActivityMenu" />
+                android:value=".activity.ActivityKelompok" />
+
         </activity>
         <activity
             android:name=".activity.ActivitySearch"
             android:label="@string/title_activity_search"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.ActivityMenu" />
         </activity>
         <activity android:name=".activity.ActivityPreview"></activity>
     </application>

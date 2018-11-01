@@ -55,6 +55,11 @@ import ptacs.ekatalog.com.e_katalogproduk.model.Produk;
 
         //dbHandler.getKategoryProduk(mMerkProduk);
         }
+     @Override
+     public boolean onSupportNavigateUp() {
+         onBackPressed();
+         return true;
+     }
      private void initRecyclerView(){
 
          recyclerView = (RecyclerView) findViewById(R.id.rv_kategori);
