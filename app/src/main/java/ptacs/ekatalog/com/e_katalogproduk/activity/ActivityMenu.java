@@ -325,7 +325,8 @@ public class ActivityMenu extends AppCompatActivity
 
 
                         pDialog = new ProgressDialog(ActivityMenu.this);
-                        pDialog.setMessage("Mohon Menunggu.... Sedang Mengupload");
+                        pDialog.setMessage("Sedang Mengupload");
+                        pDialog.setTitle("Mohon Menunggu....");
                         pDialog.setIndeterminate(false);
                         pDialog.setCancelable(true);
                         pDialog.show();
