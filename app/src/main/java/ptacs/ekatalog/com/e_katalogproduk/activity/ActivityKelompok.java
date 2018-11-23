@@ -144,15 +144,6 @@ public class ActivityKelompok extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
 
-//                    PendingIntent pendingIntent =
-//                            TaskStackBuilder.create(ActivityKelompok.this)
-//                                    // add all of DetailsActivity's parents to the stack,
-//                                    // followed by DetailsActivity itself
-//                                    .addNextIntentWithParentStack(intent)
-//                                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//                    Notification.Builder builder = new Notification.Builder(ActivityKelompok.this);
-//                    builder.setContentIntent(pendingIntent);
                 }
 
                 @Override

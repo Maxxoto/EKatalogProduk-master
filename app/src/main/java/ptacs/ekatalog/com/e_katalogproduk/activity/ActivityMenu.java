@@ -342,7 +342,10 @@ public class ActivityMenu extends AppCompatActivity
 
                 @Override
                 public void onError(Exception e) {
+                    pDialog.dismiss();
                     Toast.makeText(ActivityMenu.this, "Error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+
                 }
             });
 
